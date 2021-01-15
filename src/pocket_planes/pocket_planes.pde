@@ -72,7 +72,7 @@ void loadEU(){
 
 void drawNA(){
   for(d_City s: NA_loc){
-    if(s != NULL){
+    if(s != null){
       fill(255,0,0);
       ellipse(s.loc.x, s.loc.y,5,5);
     }
@@ -81,7 +81,7 @@ void drawNA(){
 
 void drawEU(){
   for(d_City s: EU_loc){
-    if(s != NULL){
+    if(s != null){
       fill(255,0,0);
       ellipse(s.loc.x, s.loc.y,5,5);
     }
