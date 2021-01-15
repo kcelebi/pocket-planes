@@ -1,0 +1,56 @@
+New York City	276	186
+Boston	284	177
+Philadelphia	261	190
+Washington D.C	261	196
+Atlanta	230	218
+Charleston	241	217
+Orlando	227	247
+Miami	226	255
+Montreal	282	159
+Quebec City	296	153
+Ottawa	266	161
+Toronto	253	174
+Detroit	233	182
+Thunder Bay	233	146
+Chicago	219	187
+Cincinnati	240	195
+St. Louis	203	199
+New Orleans	191	236
+Houston	168	240
+Dallas	164	227
+Kansas City	171	194
+Minneapolis	192	162
+Bismarck	153	150
+Denver	128	186
+Monterrey	148	246
+Chihuahua	122	238
+Phoenix	110	214
+Las Vegas	103	198
+Salt Lake City	113	183
+San Francisco	82	199
+Los Angeles	84	217
+San Diego	91	220
+Portland	96	167
+Seattle	104	159
+Vancouver	114	138
+Spokane	120	159
+Winnipeg	196	140
+Saskatoon	194	126
+Calgary	156	128
+Edmonton	164	120
+Ketchikan	112	129
+Juneau	108	99
+Whitehorse	98	90
+Yellowknife	176	88
+Inuvik	133	63
+Fairbanks	98	77
+Nome	47	78
+Anchorage	66	98
+Goose Bay	326	125
+Iqaluit	338	86
+Nuuk	404	91
+Mexico City	145	279
+Oaxaca	153	298
+Cancun	195	280
+Havana	223	272
+Santo Domingo	263	289
