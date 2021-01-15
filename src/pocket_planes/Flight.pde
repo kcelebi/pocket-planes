@@ -3,15 +3,17 @@ class Flight {
   int t_rem;
   int f_length; //flight length
   Plane plane;
+  int origin;
   int destination;
   
-  Flight(int tr, int fl, Plane p, int dest){
+  Flight(int tr, int fl, Plane p, int dest, int org){
     //assign attributes
     t_start = tr;
     f_length = fl;
     t_rem = f_length;
     plane = p;
     destination = dest;
+    origin = org;
   }
   
   

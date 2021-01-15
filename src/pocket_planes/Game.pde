@@ -99,7 +99,7 @@ class Game{
   void initPlane(){
     BufferedReader reader;
     String line;
-    reader = createReader("data/planes.txt");
+    reader = createReader("../../data/planes.txt");
     int p=0;
     while(p < MAX_PLANE){
       try{
@@ -131,7 +131,7 @@ class Game{
   void initCity(){
   BufferedReader reader;
     String line;
-    reader = createReader("data/city.txt");
+    reader = createReader("../../data/city.txt");
     int p=0;
     while(p < 74){
       try{
@@ -259,7 +259,7 @@ class Game{
     }
     cities[p.location].sendPlane(p); //send the plane from origin
     p.fly(dest); //fly the plane
-    addFlight(new Flight(T, calculateFlLength(/*curr_city,dest*/), p, dest)); //create flight
+    addFlight(new Flight(T, calculateFlLength(/*curr_city,dest*/), p, dest, p.location)); //create flight
   }
   
   void checkLanded(){

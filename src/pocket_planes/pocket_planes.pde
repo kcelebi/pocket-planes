@@ -7,6 +7,8 @@ int im_x = 4500;
 int im_y = 2234;
 float im_scal = 0.3;
 
+
+
 void settings(){
   im_x *= im_scal;
   im_y *= im_scal;
@@ -34,6 +36,10 @@ void draw(){
   imageMode(CORNER);
   image(img,0,0,width,height);
 
+  drawNA();
+  drawEU();
+  drawFlights();
+  
   /*g.run();
   if(g.T == g.gameLength){
     exit();
@@ -55,5 +61,13 @@ void drawEU(){
     String[] spl = s.split("\t");
     fill(255,0,0);
     ellipse(int(spl[1]), int(spl[2]),5,5);
+  }
+}
+
+void drawFlights(){
+  Flight[] fl = g.ongoing_flights;
+  
+  for(Flight f: fl){
+    
   }
 }
