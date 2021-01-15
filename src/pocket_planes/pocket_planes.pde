@@ -7,7 +7,8 @@ int im_x = 4500;
 int im_y = 2234;
 float im_scal = 0.3;
 
-
+d_City[] NA_loc = new d_City[300];
+d_City[] EU_loc = new d_City[300];
 
 void settings(){
   im_x *= im_scal;
@@ -36,6 +37,10 @@ void draw(){
   imageMode(CORNER);
   image(img,0,0,width,height);
 
+  //load locations info
+  loadNA();
+  loadEU();
+  //draw them
   drawNA();
   drawEU();
   drawFlights();
@@ -46,21 +51,33 @@ void draw(){
   }*/
 }
 
+void load_NA(){
+  String[] NA = loadStrings("../../data/loc/NA_loc.txt");
+  for(int i=0; i < NA.length; i++){
+    String[] spl = NA[i].split("\t");
+    NA_loc[i] = new d_City(int(spl[1]), int(spl[2]), spl[0])
+  }
+}
+
+void load_EU(){
+  String[] NA = loadStrings("../../data/loc/EU_loc.txt");
+  for(int i=0; i < EU.length; i++){
+    String[] spl = EU[i].split("\t");
+    EU_loc[i] = new d_City(int(spl[1]), int(spl[2]), spl[0])
+  }
+}
+
 void drawNA(){
-  String[] NA_loc = loadStrings("../../data/loc/NA_loc.txt");
-  for(String s: NA_loc){
-    String[] spl = s.split("\t");
+  for(d_City s: NA_loc){
     fill(255,0,0);
-    ellipse(int(spl[1]), int(spl[2]),5,5);
+    ellipse(s.loc.x, s.loc.y,5,5);
   }
 }
 
 void drawEU(){
-  String[] EU_loc = loadStrings("../../data/loc/EU_loc.txt");
-  for(String s: EU_loc){
-    String[] spl = s.split("\t");
+  for(d_City s: EU_loc){
     fill(255,0,0);
-    ellipse(int(spl[1]), int(spl[2]),5,5);
+    ellipse(s.loc.x, s.loc.y,5,5);
   }
 }
 
@@ -69,5 +86,15 @@ void drawFlights(){
   
   for(Flight f: fl){
     
+  }
+}
+
+class d_City{
+  PVector loc;
+  String name;
+
+  d_City(x,y,name){
+    loc = new PVector(x,y);
+    this.name = name;
   }
 }

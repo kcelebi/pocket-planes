@@ -1,6 +1,3 @@
-
-//
-// [] DNA
 class Game{
   
   int gameLength; //in minutes
