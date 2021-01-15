@@ -1,6 +1,9 @@
+import java.util.Map;
+
 Game g;
 final int PASSENGER = 0;
 final int CARGO = 1;
+
 
 PImage img;
 int im_x = 4500;
@@ -9,6 +12,8 @@ float im_scal = 0.3;
 
 d_City[] NA_loc = new d_City[300];
 d_City[] EU_loc = new d_City[300];
+
+HashMap<String,PVector> map = new HashMap<String,PVector>();
 
 void settings(){
   im_x *= im_scal;
@@ -19,8 +24,10 @@ void settings(){
 void setup(){
   img = loadImage("../../data/map.png");
   g = new Game(7,1);
-   
-  //setup tests
+
+  //load locations info
+  loadNA();
+  loadEU();
   
   Object[] goods = {new Passenger(50,55,52), new Cargo(60,55,52), new Cargo(20,55,52), new Passenger(30,55,52), new Passenger(1000,51,52)};
   int[] types = {0,1,1,0,0};
@@ -37,16 +44,12 @@ void draw(){
   imageMode(CORNER);
   image(img,0,0,width,height);
 
-  //load locations info
-  loadNA();
-  loadEU();
-
-  //draw them
+  //draw cities
   drawNA();
   drawEU();
 
   //draw flights
-  drawFlights();
+  //drawFlights();
   
   g.run();
   if(g.T == g.gameLength){
@@ -92,7 +95,12 @@ void drawFlights(){
   Flight[] fl = g.ongoing_flights;
   
   for(Flight f: fl){
-    
+    print(f.origin + "|");
+    print(f.destination + "\n");
+    PVector origin = map.get(g.city_codes[f.origin]);
+    PVector dest = map.get(g.city_codes[f.destination]);
+
+    line(origin.x, origin.y, dest.x,dest.y);
   }
 }
 
@@ -103,5 +111,6 @@ class d_City{
   d_City(int x,int y, String name){
     loc = new PVector(x,y);
     this.name = name;
+    map.put(name, loc);
   }
 }
