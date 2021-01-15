@@ -6,7 +6,7 @@ PImage img;
 
 void setup(){
   size(1000,800);
-  img = loadImage("data/world.png");
+  img = loadImage("../../data/world.png");
   randomSeed(0);
   //g = new Game(7,1);
    
@@ -69,7 +69,7 @@ void draw(){
   float mapX2 = width;
   float mapY1 = 0;
   float mapY2 = height;
-  String[] lines = loadStrings("data/loc.txt");
+  String[] lines = loadStrings("../../data/loc.txt");
   for(int i=0; i < 3; i++){
     String[] pieces = lines[i].split(" ");
     //println(pieces[0]); // city name

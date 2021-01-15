@@ -1,0 +1,4 @@
+Istanbul	664	184
+New York City	277	182
+Rio De Janeiro	384	427
+Cuba	262	289
