@@ -130,7 +130,7 @@ class Game{
     String line;
     reader = createReader("../../data/city.txt");
     int p=0;
-    while(p < 74){
+    while(p < 75){
       try{
         line = reader.readLine();
       }
@@ -182,55 +182,12 @@ class Game{
         owned_cities[h].receivePlane(owned_planes[i]); //give city plane
         if(i%3 == 0){h++;}
      }
+
+     //fix
+     Plane p = new Plane("Funda",0,0,0,0,0.1,5);
+     cities[5].receivePlane(p);
   }
   
-  
-  //algorithm to fill aircraft
-  void schedule(){
-    for(City c: owned_cities){
-        for(Plane p: c.planes){
-          if(p != null){
-            //fill up the plane
-            int[] pass_dests = new int[numAirports];
-            int[] cargo_dests = new int[numAirports];
-            //check out passengers
-            for(int i=0; i < c.pass.length; i++){
-              if(c.pass[i] != null){
-                 pass_dests[c.pass[i].destination-EUROPE] +=1;
-              }
-            }
-            //check out cargo
-            for(int i=0; i < c.cargo.length; i++){
-              if(c.cargo[i] != null){
-                cargo_dests[c.cargo[i].destination-EUROPE] +=1;
-              }
-            }
-            
-            //find most popular destination for passenger
-            int p_max=0;
-            int p_ind_max=0;
-            for(int i =0; i < pass_dests.length; i++){
-                if(pass_dests[i] >= p_max){
-                  p_max = pass_dests[i];
-                  p_ind_max = i;
-                }
-            }
-            
-            //find most popular destination for cargo
-            int c_max = 0;
-            int c_ind_max = 0;
-            for(int i=0; i < cargo_dests.length; i++){
-              if(cargo_dests[i] >= c_max){
-                c_max = cargo_dests[i];
-                c_ind_max = i;
-              }
-            }
-            
-            
-          }
-        }
-    }
-  }
   //add ongoing flight
   void addFlight(Flight fl){
     int i=0;
@@ -247,6 +204,7 @@ class Game{
     for(int i=0; i < types.length; i++){
       switch(types[i]){
         case 0: //passenger
+          print("test");
           p.loadPassenger((Passenger)item[i]);
           break;
         case 1: //cargo
@@ -254,9 +212,9 @@ class Game{
           break;
       }
     }
+    addFlight(new Flight(T, calculateFlLength(/*curr_city,dest*/), p, dest, p.location)); //create flight
     cities[p.location].sendPlane(p); //send the plane from origin
     p.fly(dest); //fly the plane
-    addFlight(new Flight(T, calculateFlLength(/*curr_city,dest*/), p, dest, p.location)); //create flight
   }
   
   void checkLanded(){
@@ -309,7 +267,7 @@ class Game{
   }
   //Calculate length of a flight
   int calculateFlLength(/*int loc, int dest*/){
-    return 6;
+    return 12;
   }
   
   void printInfo(){

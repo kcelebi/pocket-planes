@@ -72,3 +72,4 @@ Naples		70	0
 Copenhagen	71	0
 Oslo		72	0
 Stocholm	73	0
+Istanbul	74	2

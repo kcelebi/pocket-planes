@@ -1,4 +1,4 @@
-New York City	276	186
+New York	276	186
 Boston	284	177
 Philadelphia	261	190
 Washington D.C	261	196
