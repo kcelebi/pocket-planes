@@ -1,5 +1,5 @@
 //from scipy.optimize import linprog
-/*class Scheduler{
+class Scheduler{
 	
 	Game game;	
 	Scheduler(Game g){
@@ -31,6 +31,36 @@
 				C[c.code][i+74*c.code] = 1;
 			}
 		}
+	}
+
+	void sched(){
+		City[] fin_city = citySelect(); //get cities that can man flights
+		int[][] mat = new int[fin_city.length][fin_city.length];
+		int[] obj_func = new int[];
+		for(City c: fin_city){
+			for(Plane p: c.planes){
+				//make an index matrix so we dont have a 500x500 mat with a billion 0's
+				//
+			}
+		}
+
+	}
+
+
+	/**
+		Select the cities that can send planes
+	**/
+	City[] citySelect(){
+		City[] fin_city = new City[300]; //large size
+		int i=0; 
+		for(City c: g.owned_cities){
+			if(c.planes.length > 0 && (c.pass.length > 0 || c.cargo.length > 0)){
+				fin_city[i] = c;
+				i++;
+			}
+		}
+
+		return fin_city;
 	}
 
 	//Dot product
@@ -65,4 +95,4 @@
 	//Lower bounds, 0's
 
 
-}*/
+}
