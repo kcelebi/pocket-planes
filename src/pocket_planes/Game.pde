@@ -3,13 +3,13 @@ class Game{
   int gameLength; //in minutes
   int numAirports;
   int T;
+  int region;
   final int NA = 0;
   final int EUROPE = 51;
   
   int numPlanes;
   Flight[] ongoing_flights;
   City[] cities;  // cities
-  City[] owned_cities; //owned cities
   Plane[] owned_planes; //owned planes
   
   final int MAX_FLIGHT = 300; //max number of flights at one time
@@ -25,29 +25,30 @@ class Game{
   int cash;
   int bux; 
   
-  Game(int glength, int region){
+  Game(int gameLength, int region, int T, int numAirports, int numPlanes, int cash, int bux, Flight[] ongoing_flights, City[] cities, Plane[] owned_planes){
     //set basic attributes
-    T=0;
-    gameLength = glength;
-    numAirports = 5;
-    numPlanes = 12;
-    cash = 30000;
-    bux = 20;
-    ongoing_flights = new Flight[MAX_FLIGHT];
-    cities = new City[MAX_CITIES];
-    owned_planes = new Plane[MAX_PLANE];
-    owned_cities = new City[MAX_CITIES];
+    this.T=T;
+    this.region = region;
+    this.gameLength = gameLength;
+    this.numAirports = numAirports;// 5;
+    this.numPlanes = numPlanes;//12;
+    this.cash = cash;//30000;
+    this.bux = bux;//20;
+    this.ongoing_flights = ongoing_flights;//new Flight[MAX_FLIGHT];
+    this.cities = cities;///new City[MAX_CITIES];
+    this.owned_planes = owned_planes;//new Plane[MAX_PLANE];
     
     plane_info = new float[MAX_PLANE+2][5]; //arbitrary +2
     plane_names = new String[MAX_PLANE];  //arbitrary +2
     city_codes = new String[MAX_CITIES];
     
-    //load the city and plane info
+    
+    //load the city and plane info to mem
     initPlane();
     initCity();
     
     //make starter cities
-    initStarter(region);
+    initStarter();
     
     //print planes
     
@@ -84,10 +85,14 @@ class Game{
       //schedule new flights
       
       println();
-      println("BANK: " + cash);
+      println("BANK: " + this.cash);
       println();
     }
     
+  }
+  
+  Game copy(){
+    return new Game(this.gameLength, this.region, this.T, this.numAirports, this.numPlanes, this.cash, this.bux, this.ongoing_flights, this.cities, this.owned_planes);
   }
   
   
@@ -140,22 +145,28 @@ class Game{
       }
       
       String[] pieces = split(line,TAB);
-      cities[p] = new City(pieces[0],p,5*int(pieces[2]),0); //make city
+      if(p > EUROPE-1 && p < EUROPE + 5){ //just 5 cities in europe for now, reorganize later
+        //within starter, set owned
+        cities[p] = new City(pieces[0],p,5*int(pieces[2]),0, true); //make city
+      }
+      else{
+         cities[p] = new City(pieces[0],p,5*int(pieces[2]),0, false); //make city
+      }
       city_codes[p]= pieces[0]; //give name
       p++;
     }
   }
   
   
-  //create starter cities
+  //create starter cities [x]
   //based on region
   //codes are sorted based on region, so is just an int
   //and all values following (up to 6) are default cities
   //region :0 --> North America
   //region :1 --> Europe
   //give planes
-  void initStarter(int region){
-     switch(region){
+  void initStarter(){
+     /*switch(region){
        case 0: //NA
          for(int i=NA; i < EUROPE; i++){
            owned_cities[i] = cities[i];
@@ -166,7 +177,7 @@ class Game{
            println(owned_cities[i-EUROPE].name);
          }
          println();
-     }
+     }*/
      
      int h=0;
      for(int i=0; i < numPlanes; i++){
@@ -178,17 +189,22 @@ class Game{
           int(plane_info[i][3]),
           plane_info[i][4],
           region*51+h); //location
-          
-        owned_cities[h].receivePlane(owned_planes[i]); //give city plane
+        
+        if(cities[region*51+h].owned){
+          cities[region*51+h].receivePlane(owned_planes[i]); //give city plane
+        }
+        else{
+          println("City not owned!!!!");
+        }
         if(i%3 == 0){h++;}
      }
 
      //fix
-     Plane p = new Plane("Funda",0,0,0,0,0.1,5);
-     cities[5].receivePlane(p);
+     //Plane p = new Plane("Funda",0,0,0,0,0.1,5);
+     //cities[5].receivePlane(p);
   }
   
-  //add ongoing flight
+  //add ongoing flight [x]
   void addFlight(Flight fl){
     int i=0;
     while(ongoing_flights[i]!=null){
@@ -197,19 +213,15 @@ class Game{
     ongoing_flights[i] = fl;
   }
   
-  //Fly an item out
-  //0 if passenger, 1 if cargo
-  void makeCharter(Object[] item, Plane p, int[] types, int dest){
+  //Fly an item out [x]
+  void makeCharter(Item[] items, Plane p, int dest){
     //int curr_city = p.location;
-    for(int i=0; i < types.length; i++){
-      switch(types[i]){
-        case 0: //passenger
-          print("test");
-          p.loadPassenger((Passenger)item[i]);
-          break;
-        case 1: //cargo
-          p.loadCargo((Cargo)item[i]);
-          break;
+    for(int i=0; i < items.length; i++){
+      if(items[i].passQ()){
+          p.loadPassenger(items[i]);
+      }
+      else{
+          p.loadCargo(items[i]);
       }
     }
     addFlight(new Flight(T, calculateFlLength(/*curr_city,dest*/), p, dest, p.location)); //create flight
@@ -217,6 +229,7 @@ class Game{
     p.fly(dest); //fly the plane
   }
   
+  //Plane Landing procotol, [x]
   void checkLanded(){
     println("--ARRIVALS--");
     println("############");
@@ -225,30 +238,22 @@ class Game{
         println("Plane " + fl.plane.PLANE_ID + " --> " + city_codes[fl.destination] + " | LANDED");
       }
     }
-     for(int i=0; i < MAX_FLIGHT; i++){
-       if(ongoing_flights[i] != null && ongoing_flights[i].ifLanded(T)){
-           cities[ongoing_flights[i].destination].receivePlane(ongoing_flights[i].plane); //give city the plane
-           for(int j=0; j < ongoing_flights[i].plane.passengers.length; j++){
-             if(!ongoing_flights[i].plane.planeEmpty() && ongoing_flights[i].plane.passengers[j].destination == ongoing_flights[i].destination){
-               cash += ongoing_flights[i].plane.passengers[j].cost; //add money
-               ongoing_flights[i].plane.passengers[j] = null; //remove passenger
-             }
-           }
-           for(int j=0; j < ongoing_flights[i].plane.cargo.length; j++){
-             if(!ongoing_flights[i].plane.planeEmpty() && ongoing_flights[i].plane.cargo[j].destination == ongoing_flights[i].destination){
-               cash += ongoing_flights[i].plane.cargo[j].cost; //add money
-               ongoing_flights[i].plane.cargo[j] = null; //remove passenger
-             }
-           }
-           
-           ongoing_flights[i] = null;//remove flight
-       }
-     }
+    
+    for(int i=0; i < MAX_FLIGHT; i++){
+        if(ongoing_flights[i] != null && ongoing_flights[i].ifLanded(T)){
+          //if valid flight has landed
+          int ind = cities[ongoing_flights[i].destination].receivePlane(ongoing_flights[i].plane); //give city the plane
+          cities[ongoing_flights[i].destination].planes[ind].location = ongoing_flights[i].destination; //set location to destination (as in it arrived)
+         
+          this.cash += cities[ongoing_flights[i].destination].planes[ind].unload(); //ADD MONEY
+          ongoing_flights[i] = null;//remove flight
+        }
+    }
   
   }
   
  
-  //update flights
+  //update flights [x]
   void updateFlights(){
       for(Flight f: ongoing_flights){
         if(f != null){
@@ -257,7 +262,7 @@ class Game{
       }
   }
   
-  //update jobs every 4 mins
+  //update jobs every 4 mins [x]
   void updateJobs(){
       for(City c: cities){
         if(c != null){
@@ -270,19 +275,21 @@ class Game{
     return 12;
   }
   
+  
+  //print flight info [x]
   void printInfo(){
     //print departed flights
     println("--ONGOING FLIGHTS--");
     println("###################");
     for(Flight fl: ongoing_flights){
         if(fl != null){
-          println("Plane " + fl.plane.PLANE_ID + " --> " + city_codes[fl.destination] + " | Remaining: " + fl.t_rem  + " MIN");
-          for(Passenger p: fl.plane.passengers){
+          println("Plane " + fl.plane.PLANE_ID + "(" + city_codes[fl.origin]+") --> " + city_codes[fl.destination] + " | Remaining: " + fl.t_rem  + " MIN");
+          for(Item p: fl.plane.passengers){
             if(p != null){
-              println("      P(" + city_codes[p.destination] + ") " + p.cost);
+              println("      P(" + city_codes[p.destination] + ") " + p.cost); //p.cost means reward here
             }
           }
-          for(Cargo p: fl.plane.cargo){
+          for(Item p: fl.plane.cargo){
               if(p != null){
                 println("      C(" + city_codes[p.destination] + ") " + p.cost);
               }

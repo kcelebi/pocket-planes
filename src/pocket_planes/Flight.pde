@@ -8,18 +8,19 @@ class Flight {
   
   Flight(int tr, int fl, Plane p, int dest, int org){
     //assign attributes
-    t_start = tr;
-    f_length = fl;
-    t_rem = f_length;
-    plane = p;
-    destination = dest;
-    origin = org;
+    this.t_start = tr;
+    this.f_length = fl;
+    this.t_rem = f_length;
+    this.plane = p;
+    this.destination = dest;
+    this.origin = org;
   }
   
   
   //updates flight time based on current time
   void updateFlight(int currTime){
-    t_rem = f_length - (currTime-t_start);
+    this.t_rem = this.f_length - (currTime-this.t_start);
+    println("T_rem!: " + t_rem);
   }
   
   //checks if a plane has landed

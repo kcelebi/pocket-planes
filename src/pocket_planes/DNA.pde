@@ -1,4 +1,0 @@
-class DNA {
-  DNA(){
-  }
-}

@@ -1,7 +1,3 @@
-//
-//
-//[] Calculate pay
-//[] Calculate job_max increment
 class City{
   final int MAXPLANE = 300;
   final int MAX_CITIES = 300;
@@ -9,27 +5,29 @@ class City{
   int code; //city code
   String name;
   int job_max;  //max # of jobs, can increase
+  boolean owned;
   int[] flight_costs;
   Plane planes[];
-  Passenger pass[];
-  Cargo cargo[];
+  Item pass[];
+  Item cargo[];
   
-  City(String n,int c, int max, int cost){
+  City(String name,int code, int job_max, int city_cost, boolean owned){
     //set attributes
-    name = n;
-    city_cost = cost;
-    code = c;
-    job_max = max;
-    flight_costs  = new int[MAX_CITIES]; //constants for the number of cities in europe, will change
+    this.name = name;
+    this.city_cost = city_cost;
+    this.code = code;
+    this.job_max = job_max;
+    this.owned = owned;
+    flight_costs = new int[MAX_CITIES]; //constants for the number of cities in europe, will change
     planes = new Plane[MAXPLANE]; //arbitrarily large array
-    pass = new Passenger[job_max];
-    cargo = new Cargo[job_max];
+    pass = new Item[job_max];
+    cargo = new Item[job_max];
   }
   
   //randomize jobs every 4 mins
   void initJobs(){
     int pass_cap = int(random(job_max));
-    int cargo_cap = job_max-pass_cap;
+    int cargo_cap = this.job_max-pass_cap;
     
     //generate passengers
     for(int i=0; i < pass_cap; i++){
@@ -44,32 +42,33 @@ class City{
   
   
   //generate passenger
-  Passenger newPassenger(){
+  Item newPassenger(){
     int dest = int(random(10)); //10 is range of location codes
     while(dest == code){
       dest = int(random(10));
     }
     
-    return new Passenger(cost(dest),dest,code);  //calcualte pay!!!!
+    return new Item(cost(dest),dest,code, true);  //calcualte pay!!!!
   }
   
   //generate cargo
-  Cargo newCargo(){
+  Item newCargo(){
     int dest = int(random(10)); //10 is range of location codes
     while(dest == code){
       dest = int(random(10));
     }
     
-    return new Cargo(cost(dest),dest,code);  //calcualte pay!!!!
+    return new Item(cost(dest),dest,code, false);  //calcualte pay!!!!
   }
   
   //record the entry of a plane
-  void receivePlane(Plane p){ //allov plane to fly in
+  int receivePlane(Plane p){ //allov plane to fly in
     int j=0;
     while(planes[j] != null && j < MAXPLANE){
       j++;
     }
     planes[j] = p;
+    return j;
   }
   
   //record the exit of a plane
@@ -82,7 +81,7 @@ class City{
     }
   }
   
-  //load the prices related to the city from the file
+  //load the prices related to the city from the file to mem
   void loadPrices(){
     String[] city_names = new String[MAX_CITIES];
     String line;

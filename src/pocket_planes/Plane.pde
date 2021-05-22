@@ -10,8 +10,11 @@ class Plane{
   int location;
   int PLANE_ID;
   
-  Passenger passengers[];
-  Cargo cargo[];
+  int added_pass;
+  int added_cargo;
+  
+  Item passengers[];
+  Item cargo[];
   
   Plane(String in_name, int in_pass_cap, int in_cargo_cap, int in_range, int in_vel, float in_weight, int start_loc){
     //set given attributes
@@ -25,8 +28,11 @@ class Plane{
     weight = in_weight;
     
     //set cargo/passenger attributes
-    passengers = new Passenger[passenger_cap];
-    cargo = new Cargo[cargo_cap];
+    passengers = new Item[passenger_cap];
+    cargo = new Item[cargo_cap];
+    
+    added_pass = 0; //pointer to track how many things have been added;
+    added_cargo = 0; //in order to determine fullness of arrays
     
     //set record attributes
     flights = 0;
@@ -35,11 +41,12 @@ class Plane{
   
   
   //loads passenger onto plane
-  void loadPassenger(Passenger pass){
-    if(!arrayFull(passengers)){ //if not full
+  void loadPassenger(Item pass){
+    if(!arrayFull(true)){ //if not full
         for(int i=0; i < passenger_cap;i++){
             if(passengers[i] == null){ //find empty space and fill it in
                 passengers[i] = pass;
+                added_pass++;
                 return;
             }
         }
@@ -47,11 +54,12 @@ class Plane{
   }
   
   //loads cargo onto plane
-  void loadCargo(Cargo car){
-    if(!arrayFull(cargo)){ //if not full
+  void loadCargo(Item car){
+    if(!arrayFull(false)){ //if not full
           for(int i=0; i < cargo_cap;i++){
               if(cargo[i] == null){ //find empty space and fill it in
                   cargo[i] = car;
+                  added_cargo++;
                   return;
               }
           }
@@ -59,32 +67,45 @@ class Plane{
   }
   
   
-  //checks if an array is full
-  boolean arrayFull(Object[] arr){
-    boolean full = true;
-    for(Object item : arr){
-        if(item == null){
-          full = false;
-          break;
-        }
+  //unload stuff and return the money to be added to account
+  int unload(){
+    int total=0;
+    for(int i=0; i < passengers.length; i++){
+      if(passengers[i] == null){
+        break;
+      }
+      if(this.location == passengers[i].destination){
+        total += passengers[i].cost;
+        passengers[i] = null;
+        added_pass --;
+      }
     }
-    
-    return full;
+    for(int i=0; i < cargo.length; i++){
+      if(cargo[i] == null){
+        break;
+      }
+      if(this.location == cargo[i].destination){
+        total += cargo[i].cost;
+        cargo[i] = null;
+        added_cargo --;
+      }
+    }
+    if(total==0){println("Empty plane! no profit!");}
+    return total;
   }
   
-  //checks if empty
-  boolean planeEmpty(){
-    for(Passenger p :passengers){
-      if(p != null){
-        return false;
-      }
+  
+  //checks if an array is full
+  boolean arrayFull(boolean type){
+    if(type){
+      return added_pass == passenger_cap;
     }
-    for(Cargo p :cargo){
-      if(p != null){
-        return false;
-      }
-    }
-    return true;
+    return added_cargo == cargo_cap;
+  }
+  
+  //checks if plane is full
+  boolean planeFull(){
+    return arrayFull(true) && arrayFull(false);
   }
   
   //fly the plane to a location
@@ -92,5 +113,14 @@ class Plane{
     if(destination != location){
         location = destination;
     }
+    else{
+      println("Trying to send plane to its own destination!!!");
+    }
+  }
+  
+  void printInfo(){
+    println("Flight "+ PLANE_ID);
+    println("Pass Cap: " + passenger_cap);
+    println("Cargo cap: " + cargo_cap);
   }
 }
