@@ -3,6 +3,7 @@ class Game{
   int gameLength; //in minutes
   int numAirports;
   int T;
+  int region;
   final int NA = 0;
   final int EUROPE = 51;
   
@@ -25,22 +26,23 @@ class Game{
   int cash;
   int bux; 
   
-  Game(int glength, int region, int T, int numAirports, int numPlanes, int cash, int bux, Flight[] ongoing_flights, Plane[] owned_planes, City[] owned_cities){
+  Game(int gameLength, int region, int T, int numAirports, int numPlanes, int cash, int bux, Flight[] ongoing_flights, City[] cities, Plane[] owned_planes){
     //set basic attributes
-    T=0;
-    gameLength = glength;
+    this.T=T;
+    this.region = region;
+    this.gameLength = gameLength;
     this.numAirports = numAirports;// 5;
     this.numPlanes = numPlanes;//12;
-    this.cash = cash//30000;
-    this.bux = bux//20;
-    ongoing_flights = new Flight[MAX_FLIGHT];
-    cities = new City[MAX_CITIES];
-    owned_planes = new Plane[MAX_PLANE];
-    owned_cities = new City[MAX_CITIES];
+    this.cash = cash;//30000;
+    this.bux = bux;//20;
+    this.ongoing_flights = ongoing_flights;//new Flight[MAX_FLIGHT];
+    this.cities = cities;///new City[MAX_CITIES];
+    this.owned_planes = owned_planes;//new Plane[MAX_PLANE];
     
     plane_info = new float[MAX_PLANE+2][5]; //arbitrary +2
     plane_names = new String[MAX_PLANE];  //arbitrary +2
     city_codes = new String[MAX_CITIES];
+    
     
     //load the city and plane info to mem
     initPlane();
@@ -90,8 +92,8 @@ class Game{
     
   }
   
-  void copy(){
-    return new Game();
+  Game copy(){
+    return new Game(this.gameLength, this.region, this.T, this.numAirports, this.numPlanes, this.cash, this.bux, this.ongoing_flights, this.cities, this.owned_planes);
   }
   
   

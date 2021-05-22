@@ -10,8 +10,8 @@ class Plane{
   int location;
   int PLANE_ID;
   
-  Passenger passengers[];
-  Cargo cargo[];
+  Item passengers[];
+  Item cargo[];
   
   Plane(String in_name, int in_pass_cap, int in_cargo_cap, int in_range, int in_vel, float in_weight, int start_loc){
     //set given attributes
@@ -25,8 +25,8 @@ class Plane{
     weight = in_weight;
     
     //set cargo/passenger attributes
-    passengers = new Passenger[passenger_cap];
-    cargo = new Cargo[cargo_cap];
+    passengers = new Item[passenger_cap];
+    cargo = new Item[cargo_cap];
     
     //set record attributes
     flights = 0;
@@ -35,7 +35,7 @@ class Plane{
   
   
   //loads passenger onto plane
-  void loadPassenger(Passenger pass){
+  void loadPassenger(Item pass){
     if(!arrayFull(passengers)){ //if not full
         for(int i=0; i < passenger_cap;i++){
             if(passengers[i] == null){ //find empty space and fill it in
@@ -47,7 +47,7 @@ class Plane{
   }
   
   //loads cargo onto plane
-  void loadCargo(Cargo car){
+  void loadCargo(Item car){
     if(!arrayFull(cargo)){ //if not full
           for(int i=0; i < cargo_cap;i++){
               if(cargo[i] == null){ //find empty space and fill it in

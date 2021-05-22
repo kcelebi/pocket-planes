@@ -4,6 +4,10 @@ Game g;
 final int PASSENGER = 0;
 final int CARGO = 1;
 
+final int MAX_FLIGHT = 300; //max number of flights at one time
+final int MAX_CITIES = 300; //num of cities
+final int MAX_PLANE = 37;
+
 
 PImage img;
 int im_x = 4500;
@@ -23,7 +27,7 @@ void settings(){
 
 void setup(){
   img = loadImage("../../data/map.png");
-  g = new Game(7,1);
+  g = new Game(7, 51, 0, 5, 12, 30000, 20, new Flight[MAX_FLIGHT], new City[MAX_CITIES], new Plane[MAX_PLANE]);
   frameRate(1);
 
   //load locations info
@@ -35,7 +39,7 @@ void setup(){
   
   //g.makeCharter(goods, g.cities[52].planes[0],types, 55);
 
-  Object[] goods2 = {new Passenger(250, 5, 74)};
+  Object[] goods2 = {new Item(250, 5, 74, true)};
   int[] types2 = {0};
 
   g.makeCharter(goods2, g.cities[5].planes[0],types2,74);
