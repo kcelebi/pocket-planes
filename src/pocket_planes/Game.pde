@@ -10,7 +10,6 @@ class Game{
   int numPlanes;
   Flight[] ongoing_flights;
   City[] cities;  // cities
-  City[] owned_cities; //owned cities
   Plane[] owned_planes; //owned planes
   
   final int MAX_FLIGHT = 300; //max number of flights at one time
@@ -146,7 +145,13 @@ class Game{
       }
       
       String[] pieces = split(line,TAB);
-      cities[p] = new City(pieces[0],p,5*int(pieces[2]),0); //make city
+      if(p > EUROPE-1 && p < EUROPE + 5){ //just 5 cities in europe for now, reorganize later
+        //within starter, set owned
+        cities[p] = new City(pieces[0],p,5*int(pieces[2]),0, true); //make city
+      }
+      else{
+         cities[p] = new City(pieces[0],p,5*int(pieces[2]),0, false); //make city
+      }
       city_codes[p]= pieces[0]; //give name
       p++;
     }
@@ -161,7 +166,7 @@ class Game{
   //region :1 --> Europe
   //give planes
   void initStarter(int region){
-     switch(region){
+     /*switch(region){
        case 0: //NA
          for(int i=NA; i < EUROPE; i++){
            owned_cities[i] = cities[i];
@@ -172,7 +177,7 @@ class Game{
            println(owned_cities[i-EUROPE].name);
          }
          println();
-     }
+     }*/
      
      int h=0;
      for(int i=0; i < numPlanes; i++){
@@ -184,8 +189,13 @@ class Game{
           int(plane_info[i][3]),
           plane_info[i][4],
           region*51+h); //location
-          
-        owned_cities[h].receivePlane(owned_planes[i]); //give city plane
+        
+        if(cities[region*51+h].owned){
+          cities[region*51+h].receivePlane(owned_planes[i]); //give city plane
+        }
+        else{
+          println("City not owned!!!!");
+        }
         if(i%3 == 0){h++;}
      }
 
@@ -205,17 +215,14 @@ class Game{
   
   //Fly an item out
   //0 if passenger, 1 if cargo
-  void makeCharter(Object[] item, Plane p, int[] types, int dest){
+  void makeCharter(Item[] items, Plane p, int dest){
     //int curr_city = p.location;
-    for(int i=0; i < types.length; i++){
-      switch(types[i]){
-        case 0: //passenger
-          print("test");
-          p.loadPassenger((Passenger)item[i]);
-          break;
-        case 1: //cargo
-          p.loadCargo((Cargo)item[i]);
-          break;
+    for(int i=0; i < items.length; i++){
+      if(items[i].passQ()){
+          p.loadPassenger(items[i]);
+      }
+      else{
+          p.loadCargo(items[i]);
       }
     }
     addFlight(new Flight(T, calculateFlLength(/*curr_city,dest*/), p, dest, p.location)); //create flight

@@ -10,6 +10,9 @@ class Plane{
   int location;
   int PLANE_ID;
   
+  int added_pass;
+  int added_cargo;
+  
   Item passengers[];
   Item cargo[];
   
@@ -28,6 +31,9 @@ class Plane{
     passengers = new Item[passenger_cap];
     cargo = new Item[cargo_cap];
     
+    added_pass = 0; //pointer to track how many things have been added;
+    added_cargo = 0; //in order to determine fullness of arrays
+    
     //set record attributes
     flights = 0;
     miles = 0;
@@ -36,10 +42,11 @@ class Plane{
   
   //loads passenger onto plane
   void loadPassenger(Item pass){
-    if(!arrayFull(passengers)){ //if not full
+    if(!arrayFull(true)){ //if not full
         for(int i=0; i < passenger_cap;i++){
             if(passengers[i] == null){ //find empty space and fill it in
                 passengers[i] = pass;
+                added_pass++;
                 return;
             }
         }
@@ -48,10 +55,11 @@ class Plane{
   
   //loads cargo onto plane
   void loadCargo(Item car){
-    if(!arrayFull(cargo)){ //if not full
+    if(!arrayFull(false)){ //if not full
           for(int i=0; i < cargo_cap;i++){
               if(cargo[i] == null){ //find empty space and fill it in
                   cargo[i] = car;
+                  added_cargo++;
                   return;
               }
           }
@@ -60,37 +68,25 @@ class Plane{
   
   
   //checks if an array is full
-  boolean arrayFull(Object[] arr){
-    boolean full = true;
-    for(Object item : arr){
-        if(item == null){
-          full = false;
-          break;
-        }
+  boolean arrayFull(boolean type){
+    if(type){
+      return added_pass == passenger_cap;
     }
-    
-    return full;
+    return added_cargo == cargo_cap;
   }
   
-  //checks if empty
-  boolean planeEmpty(){
-    for(Passenger p :passengers){
-      if(p != null){
-        return false;
-      }
-    }
-    for(Cargo p :cargo){
-      if(p != null){
-        return false;
-      }
-    }
-    return true;
+  //checks if plane is full
+  boolean planeFull(){
+    return arrayFull(true) && arrayFull(false);
   }
   
   //fly the plane to a location
   void fly(int destination){
     if(destination != location){
         location = destination;
+    }
+    else{
+      println("Trying to send plane to its own destination!!!");
     }
   }
 }
