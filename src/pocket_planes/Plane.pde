@@ -71,6 +71,9 @@ class Plane{
   int unload(){
     int total=0;
     for(int i=0; i < passengers.length; i++){
+      if(passengers[i] == null){
+        break;
+      }
       if(this.location == passengers[i].destination){
         total += passengers[i].cost;
         passengers[i] = null;
@@ -78,6 +81,9 @@ class Plane{
       }
     }
     for(int i=0; i < cargo.length; i++){
+      if(cargo[i] == null){
+        break;
+      }
       if(this.location == cargo[i].destination){
         total += cargo[i].cost;
         cargo[i] = null;

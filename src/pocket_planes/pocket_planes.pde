@@ -36,18 +36,13 @@ void setup(){
 
   
   
-  int cit_ind = 0;
-  for(int i=0; i < g.cities.length; i++){
-    if(g.cities[i].owned){
-      cit_ind = i;
-      break;
-    }
-  }
+  int cit_ind = 51;
   
-  Item[] goods = {new Item(250, 5, cit_ind, true), new Item(400, 5, cit_ind, false), new Item(100, 5, cit_ind, true)};
-  g.cities[cit_ind].planes[0].printInfo();
-  println("CITIND: " + g.city_codes[cit_ind]);
+  Item[] goods = {new Item(250, 5, cit_ind, true)};
   g.makeCharter(goods, g.cities[cit_ind].planes[0],5);
+  
+  Item[] goods2 = {new Item(100, 10, cit_ind+1, false)};
+  g.makeCharter(goods2, g.cities[cit_ind+1].planes[0],10);
 }
 
 void draw(){
@@ -115,7 +110,7 @@ void drawFlights(){
       PVector origin = map.get(g.city_codes[f.origin]);
       PVector dest = map.get(g.city_codes[f.destination]);
       strokeWeight(4);
-      stroke(0,255,0);
+      stroke(196,68,173);
       println(origin.x);
       line(origin.x, origin.y, dest.x,dest.y);
     }
