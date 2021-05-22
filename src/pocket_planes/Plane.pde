@@ -90,6 +90,7 @@ class Plane{
         added_cargo --;
       }
     }
+    if(total==0){println("Empty plane! no profit!");}
     return total;
   }
   

@@ -14,6 +14,10 @@ int im_x = 4500;
 int im_y = 2234;
 float im_scal = 0.3;
 
+PImage planeIMG;
+int pim_x = 50;
+int pim_y = 50;
+
 d_City[] NA_loc = new d_City[300];
 d_City[] EU_loc = new d_City[300];
 
@@ -27,6 +31,7 @@ void settings(){
 
 void setup(){
   img = loadImage("../../data/map.png");
+  planeIMG = loadImage("../../data/plane.png");
   g = new Game(15, 1, 0, 5, 12, 30000, 20, new Flight[MAX_FLIGHT], new City[MAX_CITIES], new Plane[MAX_PLANE]);
   frameRate(1);
 
@@ -111,8 +116,12 @@ void drawFlights(){
       PVector dest = map.get(g.city_codes[f.destination]);
       strokeWeight(4);
       stroke(196,68,173);
-      println(origin.x);
       line(origin.x, origin.y, dest.x,dest.y);
+      imageMode(CENTER);
+      float val = (f.f_length -f.t_rem);
+      float x_pos = origin.x + val/f.f_length * (dest.x - origin.x);
+      float y_pos = origin.y + val/f.f_length * (dest.y - origin.y);
+      image(planeIMG, x_pos, y_pos,pim_x, pim_y);
     }
   }
 }

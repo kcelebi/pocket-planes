@@ -19,7 +19,8 @@ class Flight {
   
   //updates flight time based on current time
   void updateFlight(int currTime){
-    t_rem = f_length - (currTime-t_start);
+    this.t_rem = this.f_length - (currTime-this.t_start);
+    println("T_rem!: " + t_rem);
   }
   
   //checks if a plane has landed
