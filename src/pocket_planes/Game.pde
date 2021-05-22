@@ -48,7 +48,7 @@ class Game{
     initCity();
     
     //make starter cities
-    initStarter(region);
+    initStarter();
     
     //print planes
     
@@ -158,14 +158,14 @@ class Game{
   }
   
   
-  //create starter cities
+  //create starter cities [x]
   //based on region
   //codes are sorted based on region, so is just an int
   //and all values following (up to 6) are default cities
   //region :0 --> North America
   //region :1 --> Europe
   //give planes
-  void initStarter(int region){
+  void initStarter(){
      /*switch(region){
        case 0: //NA
          for(int i=NA; i < EUROPE; i++){
@@ -200,11 +200,11 @@ class Game{
      }
 
      //fix
-     Plane p = new Plane("Funda",0,0,0,0,0.1,5);
-     cities[5].receivePlane(p);
+     //Plane p = new Plane("Funda",0,0,0,0,0.1,5);
+     //cities[5].receivePlane(p);
   }
   
-  //add ongoing flight
+  //add ongoing flight [x]
   void addFlight(Flight fl){
     int i=0;
     while(ongoing_flights[i]!=null){
@@ -213,8 +213,7 @@ class Game{
     ongoing_flights[i] = fl;
   }
   
-  //Fly an item out
-  //0 if passenger, 1 if cargo
+  //Fly an item out [x]
   void makeCharter(Item[] items, Plane p, int dest){
     //int curr_city = p.location;
     for(int i=0; i < items.length; i++){
@@ -230,6 +229,7 @@ class Game{
     p.fly(dest); //fly the plane
   }
   
+  //Plane Landing procotol, [x]
   void checkLanded(){
     println("--ARRIVALS--");
     println("############");
@@ -238,26 +238,20 @@ class Game{
         println("Plane " + fl.plane.PLANE_ID + " --> " + city_codes[fl.destination] + " | LANDED");
       }
     }
-     for(int i=0; i < MAX_FLIGHT; i++){
-       if(ongoing_flights[i] != null && ongoing_flights[i].ifLanded(T)){
-         //if valid flight has landed
-           cities[ongoing_flights[i].destination].receivePlane(ongoing_flights[i].plane); //give city the plane
-           this.cash += ongoing_flights[i].plane.unload();
-           for(int j=0; j < ongoing_flights[i].plane.passengers.length; j++){
-             if(ongoing_flights[i].plane.planeFull() && ongoing_flights[i].plane.passengers[j].destination == ongoing_flights[i].destination){
-               cash += ongoing_flights[i].plane.passengers[j].cost; //add money
-               ongoing_flights[i].plane.passengers[j] = null; //remove passenger
-             }
-           }
-           
-           ongoing_flights[i] = null;//remove flight
-       }
-     }
+    
+    for(int i=0; i < MAX_FLIGHT; i++){
+        if(ongoing_flights[i] != null && ongoing_flights[i].ifLanded(T)){
+          //if valid flight has landed
+          cities[ongoing_flights[i].destination].receivePlane(ongoing_flights[i].plane); //give city the plane
+          this.cash += ongoing_flights[i].plane.unload(); //ADD MONEY
+          ongoing_flights[i] = null;//remove flight
+        }
+    }
   
   }
   
  
-  //update flights
+  //update flights [x]
   void updateFlights(){
       for(Flight f: ongoing_flights){
         if(f != null){
@@ -266,7 +260,7 @@ class Game{
       }
   }
   
-  //update jobs every 4 mins
+  //update jobs every 4 mins [x]
   void updateJobs(){
       for(City c: cities){
         if(c != null){
@@ -279,6 +273,8 @@ class Game{
     return 12;
   }
   
+  
+  //print flight info [x]
   void printInfo(){
     //print departed flights
     println("--ONGOING FLIGHTS--");
@@ -286,12 +282,12 @@ class Game{
     for(Flight fl: ongoing_flights){
         if(fl != null){
           println("Plane " + fl.plane.PLANE_ID + " --> " + city_codes[fl.destination] + " | Remaining: " + fl.t_rem  + " MIN");
-          for(Passenger p: fl.plane.passengers){
+          for(Item p: fl.plane.passengers){
             if(p != null){
               println("      P(" + city_codes[p.destination] + ") " + p.cost);
             }
           }
-          for(Cargo p: fl.plane.cargo){
+          for(Item p: fl.plane.cargo){
               if(p != null){
                 println("      C(" + city_codes[p.destination] + ") " + p.cost);
               }

@@ -27,26 +27,24 @@ void settings(){
 
 void setup(){
   img = loadImage("../../data/map.png");
-  g = new Game(7, 51, 0, 5, 12, 30000, 20, new Flight[MAX_FLIGHT], new City[MAX_CITIES], new Plane[MAX_PLANE]);
+  g = new Game(7, 1, 0, 5, 12, 30000, 20, new Flight[MAX_FLIGHT], new City[MAX_CITIES], new Plane[MAX_PLANE]);
   frameRate(1);
 
   //load locations info
   loadNA();
   loadEU();
-  
-  //Object[] goods = {new Passenger(50,55,52), new Cargo(60,55,52), new Cargo(20,55,52), new Passenger(30,55,52), new Passenger(1000,51,52)};
-  //int[] types = {0,1,1,0,0};
-  
-  //g.makeCharter(goods, g.cities[52].planes[0],types, 55);
 
-  Object[] goods2 = {new Item(250, 5, 74, true)};
-  int[] types2 = {0};
+  Item[] goods = {new Item(250, 5, 74, true), new Item(400, 5, 74, false), new Item(100, 5, 78, true)};
+  
+  int cit_ind = 0;
+  for(int i=0; i < g.cities.length; i++){
+    if(g.cities[i].owned){
+      cit_ind = i;
+      break;
+    }
+  }
 
-  g.makeCharter(goods2, g.cities[5].planes[0],types2,74);
-  /*Passenger p1 = new Passenger(30,52,51); //passenger in Berlin flying to Muncih for $30
-  Passenger p2 = new Passenger(10,53,54); //passenger in Brussels flying to Prague for $10
-  g.makeCharter(p1, g.cities[p1.location].planes[0],PASSENGER,p1.destination);
-  g.makeCharter(p2, g.cities[p2.location].planes[0],PASSENGER,p2.destination);*/
+  g.makeCharter(goods, g.cities[cit_ind].planes[0],74);
 }
 
 void draw(){
