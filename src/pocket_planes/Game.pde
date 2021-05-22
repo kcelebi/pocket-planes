@@ -42,7 +42,7 @@ class Game{
     plane_names = new String[MAX_PLANE];  //arbitrary +2
     city_codes = new String[MAX_CITIES];
     
-    //load the city and plane info
+    //load the city and plane info to mem
     initPlane();
     initCity();
     

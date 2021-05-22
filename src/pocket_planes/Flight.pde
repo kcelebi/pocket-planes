@@ -8,12 +8,12 @@ class Flight {
   
   Flight(int tr, int fl, Plane p, int dest, int org){
     //assign attributes
-    t_start = tr;
-    f_length = fl;
-    t_rem = f_length;
-    plane = p;
-    destination = dest;
-    origin = org;
+    this.t_start = tr;
+    this.f_length = fl;
+    this.t_rem = f_length;
+    this.plane = p;
+    this.destination = dest;
+    this.origin = org;
   }
   
   

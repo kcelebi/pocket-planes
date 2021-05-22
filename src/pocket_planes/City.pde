@@ -11,8 +11,8 @@ class City{
   int job_max;  //max # of jobs, can increase
   int[] flight_costs;
   Plane planes[];
-  Passenger pass[];
-  Cargo cargo[];
+  Item pass[];
+  Item cargo[];
   
   City(String n,int c, int max, int cost){
     //set attributes
@@ -22,8 +22,8 @@ class City{
     job_max = max;
     flight_costs  = new int[MAX_CITIES]; //constants for the number of cities in europe, will change
     planes = new Plane[MAXPLANE]; //arbitrarily large array
-    pass = new Passenger[job_max];
-    cargo = new Cargo[job_max];
+    pass = new Item[job_max];
+    cargo = new Item[job_max];
   }
   
   //randomize jobs every 4 mins
@@ -44,23 +44,23 @@ class City{
   
   
   //generate passenger
-  Passenger newPassenger(){
+  Item newPassenger(){
     int dest = int(random(10)); //10 is range of location codes
     while(dest == code){
       dest = int(random(10));
     }
     
-    return new Passenger(cost(dest),dest,code);  //calcualte pay!!!!
+    return new Item(cost(dest),dest,code, true);  //calcualte pay!!!!
   }
   
   //generate cargo
-  Cargo newCargo(){
+  Item newCargo(){
     int dest = int(random(10)); //10 is range of location codes
     while(dest == code){
       dest = int(random(10));
     }
     
-    return new Cargo(cost(dest),dest,code);  //calcualte pay!!!!
+    return new Item(cost(dest),dest,code, false);  //calcualte pay!!!!
   }
   
   //record the entry of a plane
@@ -82,7 +82,7 @@ class City{
     }
   }
   
-  //load the prices related to the city from the file
+  //load the prices related to the city from the file to mem
   void loadPrices(){
     String[] city_names = new String[MAX_CITIES];
     String line;
