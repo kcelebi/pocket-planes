@@ -27,14 +27,14 @@ void settings(){
 
 void setup(){
   img = loadImage("../../data/map.png");
-  g = new Game(7, 1, 0, 5, 12, 30000, 20, new Flight[MAX_FLIGHT], new City[MAX_CITIES], new Plane[MAX_PLANE]);
+  g = new Game(15, 1, 0, 5, 12, 30000, 20, new Flight[MAX_FLIGHT], new City[MAX_CITIES], new Plane[MAX_PLANE]);
   frameRate(1);
 
   //load locations info
   loadNA();
   loadEU();
 
-  Item[] goods = {new Item(250, 5, 74, true), new Item(400, 5, 74, false), new Item(100, 5, 78, true)};
+  
   
   int cit_ind = 0;
   for(int i=0; i < g.cities.length; i++){
@@ -43,8 +43,11 @@ void setup(){
       break;
     }
   }
-
-  g.makeCharter(goods, g.cities[cit_ind].planes[0],74);
+  
+  Item[] goods = {new Item(250, 5, cit_ind, true), new Item(400, 5, cit_ind, false), new Item(100, 5, cit_ind, true)};
+  g.cities[cit_ind].planes[0].printInfo();
+  println("CITIND: " + g.city_codes[cit_ind]);
+  g.makeCharter(goods, g.cities[cit_ind].planes[0],5);
 }
 
 void draw(){
@@ -58,6 +61,7 @@ void draw(){
 
   g.run();
   if(g.T == g.gameLength){
+    println("Game done!");
     exit();
   }
 

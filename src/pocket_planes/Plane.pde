@@ -110,4 +110,10 @@ class Plane{
       println("Trying to send plane to its own destination!!!");
     }
   }
+  
+  void printInfo(){
+    println("Flight "+ PLANE_ID);
+    println("Pass Cap: " + passenger_cap);
+    println("Cargo cap: " + cargo_cap);
+  }
 }

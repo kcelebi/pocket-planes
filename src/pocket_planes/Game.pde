@@ -85,7 +85,7 @@ class Game{
       //schedule new flights
       
       println();
-      println("BANK: " + cash);
+      println("BANK: " + this.cash);
       println();
     }
     
@@ -242,8 +242,10 @@ class Game{
     for(int i=0; i < MAX_FLIGHT; i++){
         if(ongoing_flights[i] != null && ongoing_flights[i].ifLanded(T)){
           //if valid flight has landed
-          cities[ongoing_flights[i].destination].receivePlane(ongoing_flights[i].plane); //give city the plane
-          this.cash += ongoing_flights[i].plane.unload(); //ADD MONEY
+          int ind = cities[ongoing_flights[i].destination].receivePlane(ongoing_flights[i].plane); //give city the plane
+          cities[ongoing_flights[i].destination].planes[ind].location = ongoing_flights[i].destination; //set location to destination (as in it arrived)
+         
+          this.cash += cities[ongoing_flights[i].destination].planes[ind].unload(); //ADD MONEY
           ongoing_flights[i] = null;//remove flight
         }
     }
@@ -281,10 +283,10 @@ class Game{
     println("###################");
     for(Flight fl: ongoing_flights){
         if(fl != null){
-          println("Plane " + fl.plane.PLANE_ID + " --> " + city_codes[fl.destination] + " | Remaining: " + fl.t_rem  + " MIN");
+          println("Plane " + fl.plane.PLANE_ID + "(" + city_codes[fl.origin]+") --> " + city_codes[fl.destination] + " | Remaining: " + fl.t_rem  + " MIN");
           for(Item p: fl.plane.passengers){
             if(p != null){
-              println("      P(" + city_codes[p.destination] + ") " + p.cost);
+              println("      P(" + city_codes[p.destination] + ") " + p.cost); //p.cost means reward here
             }
           }
           for(Item p: fl.plane.cargo){

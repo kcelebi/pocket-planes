@@ -5,9 +5,9 @@ class Item{
   boolean layover; //negative cost
   boolean type; //passenger 0 or cargo 1
   
-  Item(int pay, int dest, int loc, boolean type){
+  Item(int cost, int dest, int loc, boolean type){
     //assign attributes
-    cost = pay;
+    this.cost = cost;
     destination = dest;
     location = loc;
     layover = false; //initially false

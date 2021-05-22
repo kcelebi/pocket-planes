@@ -62,12 +62,13 @@ class City{
   }
   
   //record the entry of a plane
-  void receivePlane(Plane p){ //allov plane to fly in
+  int receivePlane(Plane p){ //allov plane to fly in
     int j=0;
     while(planes[j] != null && j < MAXPLANE){
       j++;
     }
     planes[j] = p;
+    return j;
   }
   
   //record the exit of a plane
