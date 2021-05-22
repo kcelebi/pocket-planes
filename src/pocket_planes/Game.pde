@@ -240,17 +240,13 @@ class Game{
     }
      for(int i=0; i < MAX_FLIGHT; i++){
        if(ongoing_flights[i] != null && ongoing_flights[i].ifLanded(T)){
+         //if valid flight has landed
            cities[ongoing_flights[i].destination].receivePlane(ongoing_flights[i].plane); //give city the plane
+           this.cash += ongoing_flights[i].plane.unload();
            for(int j=0; j < ongoing_flights[i].plane.passengers.length; j++){
-             if(!ongoing_flights[i].plane.planeEmpty() && ongoing_flights[i].plane.passengers[j].destination == ongoing_flights[i].destination){
+             if(ongoing_flights[i].plane.planeFull() && ongoing_flights[i].plane.passengers[j].destination == ongoing_flights[i].destination){
                cash += ongoing_flights[i].plane.passengers[j].cost; //add money
                ongoing_flights[i].plane.passengers[j] = null; //remove passenger
-             }
-           }
-           for(int j=0; j < ongoing_flights[i].plane.cargo.length; j++){
-             if(!ongoing_flights[i].plane.planeEmpty() && ongoing_flights[i].plane.cargo[j].destination == ongoing_flights[i].destination){
-               cash += ongoing_flights[i].plane.cargo[j].cost; //add money
-               ongoing_flights[i].plane.cargo[j] = null; //remove passenger
              }
            }
            

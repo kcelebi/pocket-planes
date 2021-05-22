@@ -67,6 +67,27 @@ class Plane{
   }
   
   
+  //unload stuff and return the money to be added to account
+  int unload(){
+    int total=0;
+    for(int i=0; i < passengers.length; i++){
+      if(this.location == passengers[i].destination){
+        total += passengers[i].cost;
+        passengers[i] = null;
+        added_pass --;
+      }
+    }
+    for(int i=0; i < cargo.length; i++){
+      if(this.location == cargo[i].destination){
+        total += cargo[i].cost;
+        cargo[i] = null;
+        added_cargo --;
+      }
+    }
+    return total;
+  }
+  
+  
   //checks if an array is full
   boolean arrayFull(boolean type){
     if(type){
