@@ -25,14 +25,14 @@ class Game{
   int cash;
   int bux; 
   
-  Game(int glength, int region){
+  Game(int glength, int region, int T, int numAirports, int numPlanes, int cash, int bux, Flight[] ongoing_flights, Plane[] owned_planes, City[] owned_cities){
     //set basic attributes
     T=0;
     gameLength = glength;
-    numAirports = 5;
-    numPlanes = 12;
-    cash = 30000;
-    bux = 20;
+    this.numAirports = numAirports;// 5;
+    this.numPlanes = numPlanes;//12;
+    this.cash = cash//30000;
+    this.bux = bux//20;
     ongoing_flights = new Flight[MAX_FLIGHT];
     cities = new City[MAX_CITIES];
     owned_planes = new Plane[MAX_PLANE];
@@ -88,6 +88,10 @@ class Game{
       println();
     }
     
+  }
+  
+  void copy(){
+    return new Game();
   }
   
   
