@@ -16,4 +16,4 @@ All information about data file formats found here. All of the data files are .t
 
 ## loc/EU_loc.txt and loc/NA_loc.txt
 
-These files contain data on location of cities on the map. These were created using ![map-maker package](https://github.com/kcelebi/map-maker) specifically to suit the image ``map.png``. First column is the city name, second column is the x-coordinate, and third column is the y-coordinate. These coordinates are designed for Processing/JavaScript format, so (0,0) is top left corner and (width,height) is the bottom right. 
+These files contain data on location of cities on the map. These were created using [map-maker package](https://github.com/kcelebi/map-maker) specifically to suit the image ``map.png``. First column is the city name, second column is the x-coordinate, and third column is the y-coordinate. These coordinates are designed for Processing/JavaScript format, so (0,0) is top left corner and (width,height) is the bottom right. 
