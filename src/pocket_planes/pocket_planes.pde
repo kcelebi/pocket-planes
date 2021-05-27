@@ -15,8 +15,8 @@ int im_y = 2234;
 float im_scal = 0.3;
 
 PImage planeIMG;
-int pim_x = 50;
-int pim_y = 50;
+int pim_x = 25;
+int pim_y = 25;
 
 d_City[] NA_loc = new d_City[300];
 d_City[] EU_loc = new d_City[300];
@@ -48,6 +48,9 @@ void setup(){
   
   Item[] goods2 = {new Item(100, 10, cit_ind+1, false)};
   g.makeCharter(goods2, g.cities[cit_ind+1].planes[0],10);
+  
+  
+  
 }
 
 void draw(){
@@ -114,7 +117,7 @@ void drawFlights(){
     if(f != null){
       PVector origin = map.get(g.city_codes[f.origin]);
       PVector dest = map.get(g.city_codes[f.destination]);
-      strokeWeight(4);
+      strokeWeight(2);
       stroke(196,68,173);
       line(origin.x, origin.y, dest.x,dest.y);
       imageMode(CENTER);
