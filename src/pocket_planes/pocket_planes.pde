@@ -38,10 +38,18 @@ void setup(){
   //load locations info
   loadNA();
   loadEU();
-
-  
   
   int cit_ind = 51;
+  City[] cities = g.getCities();
+  Plane[] owned_planes = g.getOwnedPlanes();
+  
+  g.run();
+  
+  for(City c: cities){
+    if(c != null && c.owned){
+      println(c.name + " | " + c.code + " | " + c.job_max + " | "+ c.printJobs());
+    }
+  }
   
   Item[] goods = {new Item(250, 5, cit_ind, true)};
   g.makeCharter(goods, g.cities[cit_ind].planes[0],5);

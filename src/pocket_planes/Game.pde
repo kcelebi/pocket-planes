@@ -134,7 +134,7 @@ class Game{
   BufferedReader reader;
     String line;
     reader = createReader("../../data/city.txt");
-    int p=0;
+    int p=0; //iterate through file, look at each city
     while(p < 75){
       try{
         line = reader.readLine();
@@ -147,7 +147,7 @@ class Game{
       String[] pieces = split(line,TAB);
       if(p > EUROPE-1 && p < EUROPE + 5){ //just 5 cities in europe for now, reorganize later
         //within starter, set owned
-        cities[p] = new City(pieces[0],p,5*int(pieces[2]),0, true); //make city
+        cities[p] = new City(pieces[0],p,5*(1+int(pieces[3])),0, true); //make city
       }
       else{
          cities[p] = new City(pieces[0],p,5*int(pieces[2]),0, false); //make city
@@ -179,7 +179,7 @@ class Game{
          println();
      }*/
      
-     int h=0;
+     int h=0; //add 3 planes per location starting in region
      for(int i=0; i < numPlanes; i++){
         owned_planes[i] = new Plane(  //make planes
           plane_names[i], 
@@ -273,6 +273,18 @@ class Game{
   //Calculate length of a flight
   int calculateFlLength(/*int loc, int dest*/){
     return 12;
+  }
+  
+  City[] getCities(){
+    return cities;
+  }
+  
+  Plane[] getOwnedPlanes(){
+    return owned_planes;
+  }
+  
+  Flight[] getOngoingFlights(){
+    return ongoing_flights;
   }
   
   

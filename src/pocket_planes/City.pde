@@ -8,8 +8,8 @@ class City{
   boolean owned;
   int[] flight_costs;
   Plane planes[];
-  Item pass[];
-  Item cargo[];
+  ArrayList<Item> pass;
+  ArrayList<Item> cargo;
   
   City(String name,int code, int job_max, int city_cost, boolean owned){
     //set attributes
@@ -20,8 +20,8 @@ class City{
     this.owned = owned;
     flight_costs = new int[MAX_CITIES]; //constants for the number of cities in europe, will change
     planes = new Plane[MAXPLANE]; //arbitrarily large array
-    pass = new Item[job_max];
-    cargo = new Item[job_max];
+    pass = new ArrayList<Item>();
+    cargo = new ArrayList<Item>();
   }
   
   //randomize jobs every 4 mins
@@ -29,14 +29,17 @@ class City{
     int pass_cap = int(random(job_max));
     int cargo_cap = this.job_max-pass_cap;
     
+    if(this.code >50 && this.code < 56){
+      println(pass_cap + "**" + cargo_cap);
+    }
     //generate passengers
     for(int i=0; i < pass_cap; i++){
-      pass[i] = newPassenger();
+      pass.add(newPassenger());
     }
     
     //generate cargo
     for(int i=0; i < cargo_cap; i++){
-      cargo[i] = newCargo();
+       cargo.add(newCargo());
     }
   }
   
@@ -104,7 +107,7 @@ class City{
     BufferedReader reader2;
     String line2;
     reader2 = createReader("data/prices.txt");
-    int p2 = 0;
+    int p2 = 0; //iterate through and save pairs
     while(p2 < 12){ //currently arbitary 12
       try{
           line2 = reader2.readLine();
@@ -156,6 +159,11 @@ class City{
     
     return flight_costs[dest];
   }
+  
+  String printJobs(){
+    return "Pass: " + pass.size() + "; Cargo: " + cargo.size();
+  }
+  
   
   
   //increment max jobs

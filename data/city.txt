@@ -1,9 +1,9 @@
 Boston		0	1
-Montreal	1	0
+Montreal		1	0
 Cincinatti	2	0
 Quebec City	3	0
 Thunder Bay	4	0
-New York	5	2
+New York		5	2
 Philadelphia	6	1
 Washington DC	7	1
 Atlanta		8	1
@@ -20,15 +20,15 @@ Minneapolis	18	0
 Kansas City	19	0
 Dallas		20	1
 Houston		21	1
-Winnipeg	22	0
+Winnipeg		22	0
 Goose Bay	23	0
 Nuuk		24	0
 Iqaluit		25	0
 Saskatoon	26	0
-Edmonton	27	0
+Edmonton		27	0
 Calgary		28	0
 Yellowknife	29	0
-Bismarck	30	0
+Bismarck		30	0
 Denver		31	0
 Monterrey	32	1
 Phoenix		33	1
@@ -38,7 +38,7 @@ San Diego	36	0
 Los Angeles	37	2
 Salt Lake City	38	0
 San Francisco	39	1
-Portland	40	0
+Portland		40	0
 Seattle		41	1
 Spokane		42	0
 Vancouver	43	0
@@ -52,12 +52,12 @@ Nome		50	0
 Berlin		51	1
 Munich		52	0
 Prague		53	0
-Brussels	54	0
+Brussels		54	0
 Bern		55	0
 Venice		56	0
 Lyon		57	0
 Paris		58	2
-Bordeaux	59	0
+Bordeaux		59	0
 Amsterdam	60	0
 Manchester	61	0
 London		62	2
@@ -71,5 +71,5 @@ Rome		69	1
 Naples		70	0
 Copenhagen	71	0
 Oslo		72	0
-Stocholm	73	0
-Istanbul	74	2
+Stocholm		73	0
+Istanbul		74	2
